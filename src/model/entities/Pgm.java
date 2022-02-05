@@ -3,20 +3,20 @@ package model.entities;
 import java.io.Serializable;
 import java.util.Objects;
 
-import model.enums.Status;
+import model.entities.enums.StatusPgm;
 
 public class Pgm implements Serializable{
 
 	private static final long serialVersionUID = 1L;
 	private Integer id;
 	private String nome;
-	private Status status;
+	private StatusPgm status;
 
 	public Pgm() {
 
 	}
 
-	public Pgm(Integer id, String nome, Status status) {
+	public Pgm(Integer id, String nome, StatusPgm status) {
 		this.id = id;
 		this.nome = nome;
 		this.status = status;
@@ -38,11 +38,11 @@ public class Pgm implements Serializable{
 		this.nome = nome;
 	}
 
-	public Status getStatus() {
+	public StatusPgm getStatus() {
 		return status;
 	}
 
-	public void setStatus(Status status) {
+	public void setStatus(StatusPgm status) {
 		this.status = status;
 	}
 
