@@ -175,12 +175,21 @@ public class Membro implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Membro [id=" + id + ", nome=" + nome + ", dataDeNascimento=" + dataDeNascimento + ", genero=" + genero
-				+ ", email=" + email + ", endereco=" + endereco + ", bairro=" + bairro + ", telefone=" + telefone
-				+ ", conjuge=" + conjuge + ", pgm=" + pgm + ", filhos=" + filhos + ", rg=" + rg + ", cpf=" + cpf
-				+ ", igreja=" + igreja + "]";
-	}
-	
+		return "Membro id=" + id + "\n" 
+				+ "--> nome=" + nome + "\n"
+				+ "--> dataDeNascimento=" + dataDeNascimento + "\n" 
+				+ "--> genero=" + genero + "\n"
+				+ "--> email=" + email + "\n"
+				+ "--> endereco=" + endereco + "\n"
+				+ "--> bairro=" + bairro + "\n"
+				+ "--> telefone=" + telefone + "\n"
+				+ "--> conjuge=" + conjuge + "\n"
+				+ "--> pgm=" + pgm + "\n"
+				+ "--> filhos=" + filhos + "\n" 
+				+ "--> rg=" + rg + "\n" 
+				+ "--> cpf=" + cpf + "\n"
+				+ "--> igreja=" + igreja + "\n";
+	}	
 	
 
 }
