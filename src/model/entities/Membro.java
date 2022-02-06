@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
+import model.entities.enums.StatusMembro;
+
 public class Membro implements Serializable{
 
 	private static final long serialVersionUID = 1L;
@@ -20,6 +22,7 @@ public class Membro implements Serializable{
 	private String filhos;
 	private String rg;
 	private String cpf;
+	private StatusMembro status;
 	private Igreja igreja;
 
 	public Membro() {
@@ -27,7 +30,7 @@ public class Membro implements Serializable{
 	}
 
 	public Membro(Integer id, String nome, Date dataDeNascimento, String genero, String email, String endereco,
-			String bairro, String telefone, String conjuge, Pgm pgm, String filhos, String rg, String cpf, Igreja igreja) {
+			String bairro, String telefone, String conjuge, Pgm pgm, String filhos, String rg, String cpf,StatusMembro status, Igreja igreja) {
 		this.id = id;
 		this.nome = nome;
 		this.dataDeNascimento = dataDeNascimento;
@@ -41,6 +44,7 @@ public class Membro implements Serializable{
 		this.filhos = filhos;
 		this.rg = rg;
 		this.cpf = cpf;
+		this.status = status;
 		this.igreja = igreja;
 	}
 
@@ -189,6 +193,14 @@ public class Membro implements Serializable{
 				+ "--> rg=" + rg + "\n" 
 				+ "--> cpf=" + cpf + "\n"
 				+ "--> igreja=" + igreja + "\n";
+	}
+
+	public StatusMembro getStatus() {
+		return status;
+	}
+
+	public void setStatus(StatusMembro status) {
+		this.status = status;
 	}	
 	
 

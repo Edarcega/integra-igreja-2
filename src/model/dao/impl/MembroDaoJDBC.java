@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -15,6 +16,7 @@ import model.dao.MembroDao;
 import model.entities.Igreja;
 import model.entities.Membro;
 import model.entities.Pgm;
+import model.entities.enums.StatusMembro;
 import model.entities.enums.StatusPgm;
 
 public class MembroDaoJDBC implements MembroDao {
@@ -27,7 +29,55 @@ public class MembroDaoJDBC implements MembroDao {
 
 	@Override
 	public void insert(Membro obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement(
+					 "INSERT INTO tb_membros "
+					+ "(NOME,DATA_DE_NASCIMENTO,GENERO,EMAIL,ENDEREÇO,"
+					+ "BAIRRO,TELEFONE,CONJUGE,ID_PGM,FILHOS,RG,CPF,STATUS,ID_IGREJA) "
+					+ "VALUES "
+					+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+					Statement.RETURN_GENERATED_KEYS);
+			
+			
+					st.setString(1, obj.getNome());
+					st.setDate(2, new java.sql.Date(obj.getDataDeNascimento().getTime()));
+					st.setString(3, obj.getGenero());
+					st.setString(4, obj.getEmail());
+					st.setString(5, obj.getEndereco());
+					st.setString(6, obj.getBairro());
+					st.setString(7, obj.getTelefone());
+					st.setString(8, obj.getConjuge());
+					st.setInt(9, obj.getPgm().getId());
+					st.setString(10, obj.getFilhos());
+					st.setString(11, obj.getRg());
+					st.setString(12, obj.getCpf());
+					st.setString(13, obj.getStatus().toString());
+					st.setInt(14, obj.getIgreja().getId());
+					
+					int linhasAfetadas = st.executeUpdate();
+					
+					if (linhasAfetadas > 0) {
+						ResultSet rs = st.getGeneratedKeys();
+						if(rs.next()) {
+							int id = rs.getInt(1);
+							obj.setId(id);
+						}
+						DB.closeResultSet(rs);
+						
+					}
+					else {
+						throw new DbException("Erro inesperado, dados não inseridos na base");
+					}
+					
+		}
+		catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+		}
+		
 
 	}
 
@@ -89,6 +139,7 @@ public class MembroDaoJDBC implements MembroDao {
 		membro.setFilhos(rs.getString("FILHOS"));
 		membro.setRg(rs.getString("RG"));
 		membro.setCpf(rs.getString("CPF"));
+		membro.setStatus(StatusMembro.valueOf(rs.getString(14)));
 		membro.setIgreja(ig);
 		return membro;
 	}
