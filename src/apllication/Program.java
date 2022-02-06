@@ -10,6 +10,7 @@ public class Program {
 
 		MembroDao membroDao = DaoFactory.createMembroDao();
 		
+		System.out.println(" ----  Testes 1: Buscar membro pelo ID  ---- ");
 		Membro membro = membroDao.findById(35);
 		System.out.println(membro);
 

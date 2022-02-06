@@ -52,32 +52,12 @@ public class MembroDaoJDBC implements MembroDao {
 			st.setInt(1, id);
 			rs = st.executeQuery();
 			if (rs.next()) {
-				Igreja ig = new Igreja();
-				ig.setId(rs.getInt(15));
-				ig.setNome(rs.getString(17));
-				ig.setCnpj(rs.getString("CNPJ"));
-				ig.setDenominacao(rs.getString("DENOMINAÇÃO"));
+				Igreja ig = instanciarIgreja(rs);
 
-				Pgm pgm = new Pgm();
-				pgm.setId(rs.getInt("ID_PGM"));
-				pgm.setNome(rs.getString("NOME_PGM"));
-				pgm.setStatus(StatusPgm.valueOf(rs.getString(22)));
+				Pgm pgm = instanciarPgm(rs);
 
-				Membro membro = new Membro();
-				membro.setId(rs.getInt("ID"));
-				membro.setNome(rs.getString(2));
-				membro.setDataDeNascimento(rs.getDate("DATA_DE_NASCIMENTO"));
-				membro.setGenero(rs.getString("GENERO"));
-				membro.setEmail(rs.getString("EMAIL"));
-				membro.setEndereco(rs.getString("ENDEREÇO"));
-				membro.setBairro(rs.getString("BAIRRO"));
-				membro.setTelefone(rs.getString("TELEFONE"));
-				membro.setConjuge(rs.getString("CONJUGE"));
-				membro.setPgm(pgm);
-				membro.setFilhos(rs.getString("FILHOS"));
-				membro.setRg(rs.getString("RG"));
-				membro.setCpf(rs.getString("CPF"));
-				membro.setIgreja(ig);
+				Membro membro = instanciarMembro(rs, ig, pgm);
+
 				return membro;
 			}
 			return null;
@@ -89,6 +69,42 @@ public class MembroDaoJDBC implements MembroDao {
 			DB.closeResultSet(rs);
 		}
 
+	}
+
+	private Membro instanciarMembro(ResultSet rs, Igreja ig, Pgm pgm) throws SQLException {
+		Membro membro = new Membro();
+		membro.setId(rs.getInt("ID"));
+		membro.setNome(rs.getString(2));
+		membro.setDataDeNascimento(rs.getDate("DATA_DE_NASCIMENTO"));
+		membro.setGenero(rs.getString("GENERO"));
+		membro.setEmail(rs.getString("EMAIL"));
+		membro.setEndereco(rs.getString("ENDEREÇO"));
+		membro.setBairro(rs.getString("BAIRRO"));
+		membro.setTelefone(rs.getString("TELEFONE"));
+		membro.setConjuge(rs.getString("CONJUGE"));
+		membro.setPgm(pgm);
+		membro.setFilhos(rs.getString("FILHOS"));
+		membro.setRg(rs.getString("RG"));
+		membro.setCpf(rs.getString("CPF"));
+		membro.setIgreja(ig);
+		return membro;
+	}
+
+	private Pgm instanciarPgm(ResultSet rs) throws SQLException {
+		Pgm pgm = new Pgm();
+		pgm.setId(rs.getInt("ID_PGM"));
+		pgm.setNome(rs.getString("NOME_PGM"));
+		pgm.setStatus(StatusPgm.valueOf(rs.getString(22)));
+		return pgm;
+	}
+
+	private Igreja instanciarIgreja(ResultSet rs) throws SQLException {
+		Igreja ig = new Igreja();
+		ig.setId(rs.getInt(15));
+		ig.setNome(rs.getString(17));
+		ig.setCnpj(rs.getString("CNPJ"));
+		ig.setDenominacao(rs.getString("DENOMINAÇÃO"));
+		return ig;
 	}
 
 	@Override
