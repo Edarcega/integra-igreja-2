@@ -31,59 +31,65 @@ public class MembroDaoJDBC implements MembroDao {
 	public void insert(Membro obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-					 "INSERT INTO tb_membros "
-					+ "(NOME,DATA_DE_NASCIMENTO,GENERO,EMAIL,ENDEREÇO,"
-					+ "BAIRRO,TELEFONE,CONJUGE,ID_PGM,FILHOS,RG,CPF,STATUS,ID_IGREJA) "
-					+ "VALUES "
-					+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
-					Statement.RETURN_GENERATED_KEYS);
-			
-			
-					st.setString(1, obj.getNome());
-					st.setDate(2, new java.sql.Date(obj.getDataDeNascimento().getTime()));
-					st.setString(3, obj.getGenero());
-					st.setString(4, obj.getEmail());
-					st.setString(5, obj.getEndereco());
-					st.setString(6, obj.getBairro());
-					st.setString(7, obj.getTelefone());
-					st.setString(8, obj.getConjuge());
-					st.setInt(9, obj.getPgm().getId());
-					st.setString(10, obj.getFilhos());
-					st.setString(11, obj.getRg());
-					st.setString(12, obj.getCpf());
-					st.setString(13, obj.getStatus().toString());
-					st.setInt(14, obj.getIgreja().getId());
-					
-					int linhasAfetadas = st.executeUpdate();
-					
-					if (linhasAfetadas > 0) {
-						ResultSet rs = st.getGeneratedKeys();
-						if(rs.next()) {
-							int id = rs.getInt(1);
-							obj.setId(id);
-						}
-						DB.closeResultSet(rs);
-						
-					}
-					else {
-						throw new DbException("Erro inesperado, dados não inseridos na base");
-					}
-					
-		}
-		catch (SQLException e) {
+			st = conn.prepareStatement("INSERT INTO tb_membros " + "(NOME,DATA_DE_NASCIMENTO,GENERO,EMAIL,ENDEREÇO,"
+					+ "BAIRRO,TELEFONE,CONJUGE,ID_PGM,FILHOS,RG,CPF,STATUS,ID_IGREJA) " + "VALUES "
+					+ "(?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
+
+			st.setString(1, obj.getNome());
+			st.setDate(2, new java.sql.Date(obj.getDataDeNascimento().getTime()));
+			st.setString(3, obj.getGenero());
+			st.setString(4, obj.getEmail());
+			st.setString(5, obj.getEndereco());
+			st.setString(6, obj.getBairro());
+			st.setString(7, obj.getTelefone());
+			st.setString(8, obj.getConjuge());
+			st.setInt(9, obj.getPgm().getId());
+			st.setString(10, obj.getFilhos());
+			st.setString(11, obj.getRg());
+			st.setString(12, obj.getCpf());
+			st.setString(13, obj.getStatus().toString());
+			st.setInt(14, obj.getIgreja().getId());
+
+			int linhasAfetadas = st.executeUpdate();
+
+			if (linhasAfetadas > 0) {
+				ResultSet rs = st.getGeneratedKeys();
+				if (rs.next()) {
+					int id = rs.getInt(1);
+					obj.setId(id);
+				}
+				DB.closeResultSet(rs);
+
+			} else {
+				throw new DbException("Erro inesperado, dados não inseridos na base");
+			}
+
+		} catch (SQLException e) {
 			throw new DbException(e.getMessage());
-		}
-		finally {
+		} finally {
 			DB.closeStatement(st);
 		}
-		
 
 	}
 
 	@Override
 	public void update(Membro obj) {
-		// TODO Auto-generated method stub
+		PreparedStatement st = null;
+		try {
+			st = conn.prepareStatement("update tb_membros " + "SET NOME = ?, " + "EMAIL = ?, "
+					+ "DATA_DE_NASCIMENTO = ?, " + "ID_PGM = ? " + "where ID = ? ");
+
+			st.setString(1, obj.getNome());
+			st.setString(2, obj.getEmail());
+			st.setDate(3, new java.sql.Date(obj.getDataDeNascimento().getTime()));
+			st.setInt(4, obj.getPgm().getId());
+			st.setInt(5, obj.getId());
+			st.executeUpdate();
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+		}
 
 	}
 
@@ -173,8 +179,7 @@ public class MembroDaoJDBC implements MembroDao {
 		ResultSet rs = null;
 
 		try {
-			st = conn.prepareStatement("SELECT *from tb_membros " 
-					+ "INNER JOIN tb_igreja INNER JOIN tb_pgms "
+			st = conn.prepareStatement("SELECT *from tb_membros " + "INNER JOIN tb_igreja INNER JOIN tb_pgms "
 					+ "ON tb_membros.ID_IGREJA = tb_igreja.ID and tb_membros.ID_PGM = tb_pgms.id ");
 
 			rs = st.executeQuery();

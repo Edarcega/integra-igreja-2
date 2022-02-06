@@ -1,5 +1,6 @@
 package apllication;
 
+import java.util.Date;
 import java.util.List;
 
 import model.dao.DaoFactory;
@@ -16,7 +17,7 @@ public class Program {
 
 	
 		System.out.println(" ----  Testes 1: Buscar membro pelo ID  ---- ");
-		Membro membro = membroDao.findById(35);
+		Membro membro = membroDao.findById(141);
 		System.out.println(membro);
 
 		/*
@@ -38,12 +39,22 @@ public class Program {
 		}
 		*/
 		
-		
+		/*
 		System.out.println("\n ----  Testes 4: Inserir dados no banco  ---- ");
 		membro.setId(null);
 		membro.setNome("Teste inserção de dados a partir do Java");
 		membroDao.insert(membro);
 		System.out.println(membro.getId());
+		*/
+		
+		System.out.println("\n ----  Testes 5: Update de dados no banco  ---- ");
+		membro.setNome("Nome alterado pelo update");
+		membro.setEmail("email@alterado.peloupdate.com");
+		membro.setDataDeNascimento(new Date());
+		Pgm pgm = new Pgm(9,"NÃO INTEGRADO", StatusPgm.ATIVO);
+		membro.setPgm(pgm);
+		membroDao.update(membro);
+		System.out.println(membro);
 
 	}
 
