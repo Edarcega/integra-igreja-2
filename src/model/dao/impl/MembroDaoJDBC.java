@@ -4,7 +4,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import db.DB;
 import db.DbException;
@@ -115,6 +118,101 @@ public class MembroDaoJDBC implements MembroDao {
 
 	@Override
 	public List<Membro> findAll() {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			st = conn.prepareStatement("SELECT *from tb_membros " 
+					+ "INNER JOIN tb_igreja INNER JOIN tb_pgms "
+					+ "ON tb_membros.ID_IGREJA = tb_igreja.ID and tb_membros.ID_PGM = tb_pgms.id ");
+
+			rs = st.executeQuery();
+
+			List<Membro> listMembros = new ArrayList<>();
+
+			Map<Integer, Igreja> mapIg = new HashMap<>();
+
+			Map<Integer, Pgm> mapPg = new HashMap<>();
+
+			while (rs.next()) {
+
+				Igreja ig = mapIg.get(rs.getInt("ID_IGREJA"));
+
+				if (ig == null) {
+					ig = instanciarIgreja(rs);
+					mapIg.put(rs.getInt("ID_IGREJA"), ig);
+				}
+
+				Pgm pgm = mapPg.get(rs.getInt("ID_PGM"));
+
+				if (pgm == null) {
+					pgm = instanciarPgm(rs);
+					mapPg.put(rs.getInt("ID_PGM"), pgm);
+				}
+
+				Membro membro = instanciarMembro(rs, ig, pgm);
+
+				listMembros.add(membro);
+
+			}
+
+			return listMembros;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+
+	}
+
+	@Override
+	public List<Membro> findByPGM(Pgm pgm) {
+		PreparedStatement st = null;
+		ResultSet rs = null;
+
+		try {
+			st = conn.prepareStatement("SELECT *from tb_membros " + "INNER JOIN tb_igreja INNER JOIN tb_pgms "
+					+ "ON tb_membros.ID_IGREJA = tb_igreja.ID and tb_membros.ID_PGM = tb_pgms.id "
+					+ "WHERE tb_pgms.id = ? " + "order by tb_membros.NOME");
+			st.setInt(1, pgm.getId());
+
+			rs = st.executeQuery();
+
+			List<Membro> listMembros = new ArrayList<>();
+
+			Map<Integer, Igreja> map = new HashMap<>();
+
+			while (rs.next()) {
+
+				// Arrumar a instanciação da igreja para pegar os nomes corretos
+				Igreja ig = map.get(rs.getInt("ID_IGREJA"));
+
+				if (ig == null) {
+					ig = instanciarIgreja(rs);
+					map.put(rs.getInt("ID_IGREJA"), ig);
+				}
+
+				Membro membro = instanciarMembro(rs, ig, pgm);
+
+				listMembros.add(membro);
+
+			}
+
+			return listMembros;
+
+		} catch (SQLException e) {
+			throw new DbException(e.getMessage());
+		} finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
+
+	}
+
+	@Override
+	public List<Membro> findByIgreja(Igreja igreja) {
 		// TODO Auto-generated method stub
 		return null;
 	}
