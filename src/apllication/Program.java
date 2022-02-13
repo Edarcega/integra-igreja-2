@@ -15,22 +15,25 @@ public class Program {
 
 		MembroDao membroDao = DaoFactory.createMembroDao();
 
-	
+		//Está funcionando
+		/*
 		System.out.println(" ----  Testes 1: Buscar membro pelo ID  ---- ");
-		Membro membro = membroDao.findById(141);
+		Membro membro = membroDao.findById(35);
 		System.out.println(membro);
+		*/
 
+		// Está funcionando
 		/*
 		System.out.println("\n ----  Testes 2: Buscar membro pelo PGM  ---- ");
-		Pgm pgm = new Pgm(1, "ALFA", StatusPgm.ATIVO);
-		List<Membro> membros = membroDao.findByPGM(pgm);
+		List<Membro> membros = membroDao.findByPGM(9);
 		
 		for (Membro memb : membros) {
 			System.out.println(memb);
 		}
 		*/
 		
-		/*
+		
+		/* eSTÁ FUNCIONANDO
 		System.out.println("\n ----  Testes 3: Buscar Todos  ---- ");
 		List<Membro> lmembros = membroDao.findAll();
 		
@@ -39,7 +42,8 @@ public class Program {
 		}
 		*/
 		
-		/*
+		
+		/* Esta funcionando
 		System.out.println("\n ----  Testes 4: Inserir dados no banco  ---- ");
 		membro.setId(null);
 		membro.setNome("Teste inserção de dados a partir do Java");
@@ -47,7 +51,9 @@ public class Program {
 		System.out.println(membro.getId());
 		*/
 		
-		System.out.println("\n ----  Testes 5: Update de dados no banco  ---- ");
+		
+		/*Esta funcionando
+		 * System.out.println("\n ----  Testes 5: Update de dados no banco  ---- ");
 		membro.setNome("Nome alterado pelo update");
 		membro.setEmail("email@alterado.peloupdate.com");
 		membro.setDataDeNascimento(new Date());
@@ -55,6 +61,7 @@ public class Program {
 		membro.setPgm(pgm);
 		membroDao.update(membro);
 		System.out.println(membro);
+		*/
 
 	}
 
