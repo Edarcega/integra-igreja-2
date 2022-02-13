@@ -14,7 +14,7 @@ public interface IgrejaDao {
 
 	Igreja findById(Integer id);
 
-	Igreja findByName(String Name);
+	List<Igreja> findByName(String Name);
 
 	List<Igreja> findAll();
 

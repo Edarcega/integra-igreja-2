@@ -11,15 +11,17 @@ public class Pgm implements Serializable{
 	private Integer id;
 	private String nome;
 	private StatusPgm status;
+	private Integer idIgreja;
 
 	public Pgm() {
 
 	}
 
-	public Pgm(Integer id, String nome, StatusPgm status) {
+	public Pgm(Integer id, String nome, StatusPgm status, Integer idIgreja) {
 		this.id = id;
 		this.nome = nome;
 		this.status = status;
+		this.idIgreja = idIgreja;
 	}
 
 	public Integer getId() {
@@ -65,7 +67,15 @@ public class Pgm implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pgm [id=" + id + ", nome=" + nome + ", status=" + status + "]";
+		return "Pgm [id=" + id + ", nome=" + nome + ", status=" + status + ", idIgreja=" + idIgreja + "]";
+	}
+
+	public Integer getIdIgreja() {
+		return idIgreja;
+	}
+
+	public void setIdIgreja(Integer idIgreja) {
+		this.idIgreja = idIgreja;
 	}
 	
 	

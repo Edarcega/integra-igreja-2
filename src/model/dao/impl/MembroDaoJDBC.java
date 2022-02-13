@@ -225,10 +225,6 @@ public class MembroDaoJDBC implements MembroDao {
 
 				listMembros.add(membro);
 
-				if (listMembros.size() == 0) {
-					return null;
-				}
-
 			}
 
 			return listMembros;

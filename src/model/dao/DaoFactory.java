@@ -12,11 +12,11 @@ public class DaoFactory {
 	}
 	
 	public static IgrejaDao createIgrejaDao () {
-		return new IgrejaDaoJDBC();
+		return new IgrejaDaoJDBC(DB.getConnection());
 	}
 	
 	public static PgmDao createPgmDao () {
-		return new PgmDaoJDBC();
+		return new PgmDaoJDBC(DB.getConnection());
 	}
 
 }

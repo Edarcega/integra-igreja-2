@@ -14,7 +14,7 @@ public interface PgmDao {
 
 	Pgm findById(Integer id);
 
-	Pgm findByName(String Name);
+	List<Pgm> findByName(String Name);
 
 	List<Pgm> findAll();
 
