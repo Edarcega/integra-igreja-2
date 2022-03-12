@@ -35,7 +35,7 @@ public class MembroDaoJDBC implements MembroDao {
 		membro.setDataDeNascimento(rs.getDate("DATA_DE_NASCIMENTO"));
 		membro.setGenero(rs.getString("GENERO"));
 		membro.setEmail(rs.getString("EMAIL"));
-		membro.setEndereco(rs.getString("ENDEREÃ‡O"));
+		membro.setEndereco(rs.getString("ENDEREÇO"));
 		membro.setBairro(rs.getString("BAIRRO"));
 		membro.setTelefone(rs.getString("TELEFONE"));
 		membro.setEstadoCivil(StatusCivil.valueOf(rs.getString("ESTADO_CIVIL")));
@@ -65,7 +65,7 @@ public class MembroDaoJDBC implements MembroDao {
 		ig.setId(rs.getInt("ID_IGREJA_PESSOA"));
 		ig.setNome(rs.getString("NOME_IGREJA"));
 		ig.setCnpj(rs.getString("CNPJ"));
-		ig.setDenominacao(rs.getString("DENOMINAÃ‡ÃƒO"));
+		ig.setDenominacao(rs.getString("DENOMINAÇÃO"));
 		return ig;
 	}
 
@@ -74,7 +74,7 @@ public class MembroDaoJDBC implements MembroDao {
 		PreparedStatement st = null;
 		try {
 			st = conn.prepareStatement("INSERT INTO tb_membros "
-					+ "(NOME_PESSOA,DATA_DE_NASCIMENTO,GENERO,EMAIL,ENDEREÃ‡O,"
+					+ "(NOME_PESSOA,DATA_DE_NASCIMENTO,GENERO,EMAIL,ENDEREÇO,"
 					+ "BAIRRO,TELEFONE,ESTADO_CIVIL,NOME_CONJUGE,ID_CONJUGE,ID_PGM_PESSOA,NOME_FILHO,QTD_FILHOS,ID_FILHOS,RG,CPF,STATUS_MEMBRO,ID_IGREJA_PESSOA) "
 					+ "VALUES " + "(?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)", Statement.RETURN_GENERATED_KEYS);
 

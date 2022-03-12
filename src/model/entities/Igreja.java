@@ -74,7 +74,7 @@ public class Igreja implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Igreja [id=" + id + ", nome=" + nome + ", denominacao=" + denominacao + ", cnpj=" + cnpj + "]";
+		return nome;
 	}
 
 }

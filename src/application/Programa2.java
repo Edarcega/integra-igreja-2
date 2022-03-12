@@ -1,4 +1,4 @@
-package apllication;
+package application;
 
 import java.io.IOException;
 import java.text.ParseException;
@@ -71,7 +71,7 @@ public class Programa2 {
 
 		switch (opc) {
 		case 1:
-			Pgm pgm = new Pgm(9, "N√ÉO INTEGRADO", StatusPgm.ATIVO, 0);
+			Pgm pgm = new Pgm(9, "N√O INTEGRADO", StatusPgm.ATIVO, 0);
 			Igreja ig = new Igreja(2, "IGREJA BATISTA MONTE CASTELO", "BATISTA", "27247539000105");
 			sc.nextLine();
 

@@ -67,7 +67,7 @@ public class Pgm implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Pgm [id=" + id + ", nome=" + nome + ", status=" + status + ", idIgreja=" + idIgreja + "]";
+		return nome;
 	}
 
 	public Integer getIdIgreja() {
@@ -77,6 +77,5 @@ public class Pgm implements Serializable{
 	public void setIdIgreja(Integer idIgreja) {
 		this.idIgreja = idIgreja;
 	}
-	
 	
 }

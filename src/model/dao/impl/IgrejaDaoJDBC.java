@@ -26,7 +26,7 @@ public class IgrejaDaoJDBC implements IgrejaDao {
 		ig.setId(rs.getInt("ID"));
 		ig.setNome(rs.getString("NOME_IGREJA"));
 		ig.setCnpj(rs.getString("CNPJ"));
-		ig.setDenominacao(rs.getString("DENOMINA√á√ÉO"));
+		ig.setDenominacao(rs.getString("DENOMINA«√O"));
 		return ig;
 	}
 
@@ -34,7 +34,7 @@ public class IgrejaDaoJDBC implements IgrejaDao {
 	public void insert(Igreja obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("insert into tb_igreja (NOME_IGREJA, DENOMINA√á√ÉO,CNPJ) " + "value (?,?,?)",
+			st = conn.prepareStatement("insert into tb_igreja (NOME_IGREJA, DENOMINA«√O,CNPJ) " + "value (?,?,?)",
 					Statement.RETURN_GENERATED_KEYS);
 
 			st.setString(1, obj.getNome());

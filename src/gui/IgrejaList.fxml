@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.ToolBar?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox prefHeight="316.0" prefWidth="615.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="gui.IgrejaListController">
+   <children>
+      <Label text="Registro de Igrejas">
+         <font>
+            <Font name="System Bold" size="14.0" />
+         </font>
+      </Label>
+      <ToolBar prefHeight="40.0" prefWidth="200.0">
+        <items>
+          <Button fx:id="btNew" mnemonicParsing="false" onAction="#onBtNewAction" text="Novo" />
+        </items>
+      </ToolBar>
+      <TableView fx:id="tableViewIgreja" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="tableColumnId" prefWidth="43.0" text="ID" />
+          <TableColumn fx:id="tableColumnNome" prefWidth="236.0" text="NOME" />
+            <TableColumn fx:id="tableColumnDenominacao" prefWidth="162.0" text="DENOMINACAO" />
+            <TableColumn fx:id="tableColumnCNPJ" minWidth="4.0" prefWidth="163.0" text="CNPJ" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>
