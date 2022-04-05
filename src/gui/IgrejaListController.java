@@ -37,8 +37,7 @@ public class IgrejaListController implements Initializable {
 	private TableView<Igreja> tableViewIgreja;// Referência para tabela
 
 	@FXML
-	private TableColumn<Igreja, Integer> tableColumnId;// O primeiro tipo é a entidade e a segunda é o tipo da
-														// coluna
+	private TableColumn<Igreja, Integer> tableColumnId;// O primeiro tipo é a entidade e a segunda é o tipo da										// coluna
 
 	@FXML
 	private TableColumn<Igreja, String> tableColumnNome;
@@ -57,7 +56,8 @@ public class IgrejaListController implements Initializable {
 	@FXML
 	public void onBtNewAction(ActionEvent event) {
 		Stage parentStage = Utils.currentStage(event);
-		createDialogForm("/gui/IgrejaForm.fxml", parentStage);
+		Igreja igreja = new Igreja();
+		createDialogForm(igreja, "/gui/IgrejaForm.fxml", parentStage);
 	}
 
 	public void setIgrejaService(IgrejaServices service) {
@@ -100,10 +100,15 @@ public class IgrejaListController implements Initializable {
 	
 	// Esta classe cria uma janela modal (diálogo)
 	// Recebe como parametro o palco que chamou a janela e a tela
-	private void createDialogForm (String absoluteName, Stage parentStage) {
+	private void createDialogForm (Igreja igreja, String absoluteName, Stage parentStage) {
 		try {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName)); // recebe o nome da view que será carregada
 			Pane pane = loader.load();
+			
+			IgrejaFormController controller = loader.getController();
+			controller.setIgreja(igreja);
+			controller.setIgrejaService(new IgrejaServices());
+			controller.updateFormData();
 			
 			//Quando vou carregar uma janela na frente da outra precisa instanciar um novo Stage
 			

@@ -52,7 +52,7 @@ public class IgrejaDaoJDBC implements IgrejaDao {
 				DB.closeResultSet(rs);
 
 			} else {
-				throw new DbException("Erro inesperado, dados n√£o inseridos na base");
+				throw new DbException("Erro inesperado, dados n„o inseridos na base");
 			}
 
 		} catch (SQLException e) {

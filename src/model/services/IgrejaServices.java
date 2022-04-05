@@ -14,4 +14,12 @@ public class IgrejaServices {
 		return igrejaDao.findAll();
 	}
 
+	public void saveOrUpdate(Igreja obj) {
+		if (obj.getId() == null) {
+			igrejaDao.insert(obj);
+		} else {
+			igrejaDao.update(obj);
+		}
+	}
+
 }

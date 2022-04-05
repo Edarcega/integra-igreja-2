@@ -1,19 +1,28 @@
 package gui;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
 import java.util.ResourceBundle;
 
 import application.Main;
+import gui.util.Alerts;
+import gui.util.Utils;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 import model.entities.Membro;
 import model.entities.enums.StatusMembro;
@@ -83,8 +92,10 @@ public class MembroListController implements Initializable {
 	private Button btNew;
 
 	@FXML
-	public void onBtNewAction() {
-		System.out.println("OnBtNewAction");
+	public void onBtNewAction(ActionEvent event) {
+		Stage parentStage = Utils.currentStage(event);
+		Membro membro = new Membro();
+		createDialogForm(membro, "/gui/MemberForm.fxml", parentStage);
 	}
 
 	public void setMembService(MembServices service) {
@@ -133,5 +144,30 @@ public class MembroListController implements Initializable {
 		tableViewMembro.setItems(obsList);
 
 	}
+	
+	private void createDialogForm (Membro membro, String absoluteName, Stage parentStage) {
+		try {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName)); // recebe o nome da view que será carregada
+			Pane pane = loader.load();
+			
+			MemberFormController controller = loader.getController();
+			controller.setMembro(membro);
+			controller.setMembServices(service);
+			controller.updateFormData();
+			
+			//Quando vou carregar uma janela na frente da outra precisa instanciar um novo Stage
+			Stage dialogStage = new Stage();
+			dialogStage.setTitle("Entrada de dados de Membros");
+			dialogStage.setScene(new Scene(pane));
+			dialogStage.setResizable(false);// trava de redimencionamento
+			dialogStage.initOwner(parentStage);
+			dialogStage.initModality(Modality.WINDOW_MODAL);
+			dialogStage.showAndWait();
+		}
+		catch (IOException e) {
+			Alerts.showAlert("IO Exception", "Error loading view", e.getMessage(), AlertType.ERROR);
+		}
+	}
+	
 
 }

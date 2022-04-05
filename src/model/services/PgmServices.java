@@ -13,5 +13,13 @@ public class PgmServices {
 	public List<Pgm> listPgms (){
 		return pgmDao.findAll();
 	}
+	
+	public void saveOrUpdate(Pgm obj) {
+		if (obj.getId() == null) {
+			pgmDao.insert(obj);
+		}else {
+			pgmDao.update(obj);
+		}
+	}
 
 }
